@@ -2,5 +2,34 @@
   <app-loading></app-loading>
 </div>
 <div *ngIf="!pageLoading">
+  <div class="container">
+    <div class="convert-temps">
+      <span (click)="fToC()">&#8451;</span> / <span (click)="cToF()">&#8457;</span>
+    </div>
+    <h1>{{currentWeather.city}}</h1>
+    <form (ngSubmit)="searchByCityName()">
+      <input type="text" [(ngModel)]="searchCityName" [ngModelOptions]="{standalone: true}" />
+      <button type="submit">Go</button>
+    </form>
+    <h2>{{round(currentWeather.temp, 1)}}</h2>
+    <div class="weather-icon">
+      <img src="http://openweathermap.org/img/w/{{currentWeather.icon}}.png" />
+    </div>
+    <h3>{{currentWeather.weatherKind}}</h3>
+    <h4>Max: {{round(currentWeather.tempMax, 1)}}</h4>
+    <h4>Min: {{round(currentWeather.tempMin, 1)}}</h4>
+  </div>
 
+  <div class="container">
+    <div class="day" *ngFor="let day of forecast">
+      <h2>{{day.date}}</h2>
+      <h2>{{round(day.temp, 1)}}</h2>
+      <div class="weather-icon">
+        <img src="http://openweathermap.org/img/w/{{day.icon}}.png" />
+      </div>
+      <h3>{{day.weatherKind}}</h3>
+      <h4>Max: {{round(day.tempMax, 1)}}</h4>
+      <h4>Min: {{round(day.tempMin, 1)}}</h4>
+    </div>
+  </div>
 </div>

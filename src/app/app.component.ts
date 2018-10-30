@@ -32,8 +32,6 @@ export class AppComponent implements OnInit {
           );
 
           this.weatherService.getWeatherForecast(lat, lon).subscribe(forecast => {
-              this.cityName = forecast.city.name;
-
               const list = forecast.list;
 
               for (let i = 0; i < list.length; i += 8) {
@@ -66,8 +64,6 @@ export class AppComponent implements OnInit {
       );
 
       this.weatherService.getWeatherForecastByCityName(this.searchCityName).subscribe(forecast => {
-          this.cityName = forecast.city.name;
-
           const list = forecast.list;
 
           this.forecast = [];
