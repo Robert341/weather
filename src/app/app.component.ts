@@ -24,11 +24,11 @@ export class AppComponent implements OnInit {
         this.weatherService.getCurrentWeather(lat, lon).subscribe(weather => {
           this.currentWeather = new Weather(
             weather.name,
-            weather.main.temp,
+            Math.round(weather.main.temp),
             weather.weather[0].icon,
             this.capitalize(weather.weather[0].description),
-            weather.main.temp_max,
-            weather.main.temp_min
+            Math.round(weather.main.temp_max),
+            Math.round(weather.main.temp_min)
           );
 
           this.weatherService.getWeatherForecast(lat, lon).subscribe(forecast => {
@@ -37,11 +37,11 @@ export class AppComponent implements OnInit {
               for (let i = 0; i < list.length; i += 8) {
                 this.forecast.push(new ForecastDay(
                   list[i].dt_txt.split(' ')[0],
-                  list[i].main.temp,
+                  Math.round(list[i].main.temp),
                   list[i].weather[0].icon,
                   this.capitalize(list[i].weather[0].description),
-                  list[i].main.temp_max,
-                  list[i].main.temp_min
+                  Math.round(list[i].main.temp_max),
+                  Math.round(list[i].main.temp_min)
                 ));
               }
           });

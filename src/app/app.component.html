@@ -2,34 +2,284 @@
   <app-loading></app-loading>
 </div>
 <div *ngIf="!pageLoading">
-  <div class="container">
-    <div class="convert-temps">
-      <span (click)="fToC()">&#8451;</span> / <span (click)="cToF()">&#8457;</span>
+
+  <div class="header_bg">
+    <div class="header">
+      <div class="header_logo">
+        <a href="#">
+          <img src="../assets/image/logo.png" alt="">
+        </a>
+      </div>
+
+      <div class="header_menu">
+        <ul>
+          <li>
+            <a href="#">About</a>
+          </li>
+          <li>
+            <a href="#">Services</a>
+          </li>
+          <li>
+            <a href="#">Contacts</a>
+          </li>
+          <li class="drop">
+            <a href="#"><i class="fas fa-user-circle"></i> John <i class="fas fa-angle-down"></i></a>
+            <ul>
+              <li>
+                <a href="#">menu1</a>
+              </li>
+              <li>
+                <a href="#">menu2</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="mob_menu">
+        <i class="fas fa-bars"></i>
+      </div>
     </div>
-    <h1>{{currentWeather.city}}</h1>
-    <form (ngSubmit)="searchByCityName()">
-      <input type="text" [(ngModel)]="searchCityName" [ngModelOptions]="{standalone: true}" />
-      <button type="submit">Go</button>
-    </form>
-    <h2>{{round(currentWeather.temp, 1)}}</h2>
-    <div class="weather-icon">
-      <img src="http://openweathermap.org/img/w/{{currentWeather.icon}}.png" />
-    </div>
-    <h3>{{currentWeather.weatherKind}}</h3>
-    <h4>Max: {{round(currentWeather.tempMax, 1)}}</h4>
-    <h4>Min: {{round(currentWeather.tempMin, 1)}}</h4>
   </div>
 
-  <div class="container">
-    <div class="day" *ngFor="let day of forecast">
-      <h2>{{day.date}}</h2>
-      <h2>{{round(day.temp, 1)}}</h2>
-      <div class="weather-icon">
-        <img src="http://openweathermap.org/img/w/{{day.icon}}.png" />
+  <div class="container section_search">
+    <div class="row">
+      <div class="col-sm-8 section_search_col">
+        <form class="section_search_form" (ngSubmit)="searchByCityName()">
+          <input type="text" [(ngModel)]="searchCityName" [ngModelOptions]="{standalone: true}" name="" value="" placeholder="Search your location">
+          <button type="submit" name="button"><i class="fas fa-search"></i></button>
+        </form>
       </div>
-      <h3>{{day.weatherKind}}</h3>
-      <h4>Max: {{round(day.tempMax, 1)}}</h4>
-      <h4>Min: {{round(day.tempMin, 1)}}</h4>
     </div>
   </div>
+
+  <div class="container section1">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="section1_title">
+          <i class="fas fa-map-marker-alt"></i><span><b> {{currentWeather.city}}</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="row sec1_box_bg">
+      <div class="col-md-3">
+        <div class="sec1_box active">
+          <div class="sec1_box_item">
+            <div class="sec1_box_top">
+              <div class="sec1_box_left">
+                Now  <i class="far fa-clock"></i>15:00
+              </div>
+              <div class="sec1_box_right">
+
+                <div class="dropdown">
+                  <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Celsius <i class="fas fa-cog"></i>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dLabel">
+                    <li>
+                      <a href="#">Fahrenheit</a>
+                    </li>
+                    <li>
+                      <a href="#">Kelvin</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="sec1_box_img">
+              <img src="../assets/image/cloudy-rainy.png" alt="">
+              <span class="sec1_box_text_span">{{currentWeather.temp}}<span>o</span></span>
+            </div>
+            <div class="sec1_box_country">{{currentWeather.weatherKind}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="sec1_box">
+          <div class="sec1_box_item">
+            <div class="sec1_box_top">
+              <div class="sec1_box_left">
+                Morning  <i class="fas fa-sun"></i>
+              </div>
+            </div>
+            <div class="sec1_box_img">
+              <img src="../assets/image/cloudy.png" alt="">
+              <span class="sec1_box_text_span">{{currentWeather.tempMin}}<span>o</span></span>
+            </div>
+            <div class="sec1_box_country">{{currentWeather.weatherKind}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="sec1_box">
+          <div class="sec1_box_item">
+            <div class="sec1_box_top">
+              <div class="sec1_box_left">
+                Afternoon <i class="fas fa-sun"></i>
+              </div>
+            </div>
+            <div class="sec1_box_img">
+              <img src="../assets/image/lightening-rain.png" alt="">
+              <span class="sec1_box_text_span">{{currentWeather.temp}}</span>
+            </div>
+            <div class="sec1_box_country">{{currentWeather.weatherKind}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="sec1_box">
+          <div class="sec1_box_item">
+            <div class="sec1_box_top">
+              <div class="sec1_box_left">
+                Night <i class="fas fa-moon"></i>
+              </div>
+            </div>
+            <div class="sec1_box_img">
+              <img src="../assets/image/snow.png" alt="">
+              <span class="sec1_box_text_span">{{currentWeather.tempMax}}<span>o</span></span>
+            </div>
+            <div class="sec1_box_country">{{currentWeather.weatherKind}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container section2">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="section2_title">
+          <i class="fas fa-calendar-alt"></i><span><b> 5 day forecast</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="row sec2_box_bg">
+      <div class="col-md-2">
+        <div class="sec1_box">
+          <div class="sec1_box_item">
+            <div class="sec1_box_top">
+              <div class="sec1_box_left">
+                <b>Tomorrow,</b> 10 oct.
+              </div>
+            </div>
+            <div class="sec1_box_img">
+              <img src="../assets/image/clear.png" alt="">
+              <span class="sec1_box_text_bg">
+                  <span class="sec2_box_text1">+15<span>o</span></span>
+                  <span class="sec2_box_text2">+3<span>o</span></span>
+                </span>
+            </div>
+            <div class="sec1_box_country">
+              Sunny
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="sec1_box">
+          <div class="sec1_box_item">
+            <div class="sec1_box_top">
+              <div class="sec1_box_left">
+                <b>Wed.</b> 11 oct.
+              </div>
+            </div>
+            <div class="sec1_box_img">
+              <img src="../assets/image/cloudy-all.png" alt="">
+              <span class="sec1_box_text_bg">
+                  <span class="sec2_box_text1">+15<span>o</span></span>
+                  <span class="sec2_box_text2">+3<span>o</span></span>
+                </span>
+            </div>
+            <div class="sec1_box_country">
+              Sunny
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="sec1_box">
+          <div class="sec1_box_item">
+            <div class="sec1_box_top">
+              <div class="sec1_box_left">
+                <b>Thu.</b> 12 oct.
+              </div>
+            </div>
+            <div class="sec1_box_img">
+              <img src="../assets/image/lightening.png" alt="">
+              <span class="sec1_box_text_bg">
+                  <span class="sec2_box_text1">+15<span>o</span></span>
+                  <span class="sec2_box_text2">+3<span>o</span></span>
+                </span>
+            </div>
+            <div class="sec1_box_country">
+              Sunny
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="sec1_box">
+          <div class="sec1_box_item">
+            <div class="sec1_box_top">
+              <div class="sec1_box_left">
+                <b>Fri.</b> 13 oct.
+              </div>
+            </div>
+            <div class="sec1_box_img">
+              <img src="../assets/image/hail.png" alt="">
+              <span class="sec1_box_text_bg">
+                  <span class="sec2_box_text1">+15<span>o</span></span>
+                  <span class="sec2_box_text2">+3<span>o</span></span>
+                </span>
+            </div>
+            <div class="sec1_box_country">
+              Sunny
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="sec1_box">
+          <div class="sec1_box_item">
+            <div class="sec1_box_top">
+              <div class="sec1_box_left">
+                <b class="weekend">Sat.</b> 14 oct.
+              </div>
+            </div>
+            <div class="sec1_box_img">
+              <img src="../assets/image/snow.png" alt="">
+              <span class="sec1_box_text_bg">
+                  <span class="sec2_box_text1">+15<span>o</span></span>
+                  <span class="sec2_box_text2">+3<span>o</span></span>
+                </span>
+            </div>
+            <div class="sec1_box_country">
+              Sunny
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="sec1_box">
+          <div class="sec1_box_item">
+            <div class="sec1_box_top">
+              <div class="sec1_box_left">
+                <b class="weekend">Sun.</b> 15 oct.
+              </div>
+            </div>
+            <div class="sec1_box_img">
+              <img src="../assets/image/cloudy.png" alt="">
+              <span class="sec1_box_text_bg">
+                  <span class="sec2_box_text1">+15<span>o</span></span>
+                  <span class="sec2_box_text2">+3<span>o</span></span>
+                </span>
+            </div>
+            <div class="sec1_box_country">
+              Sunny
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
