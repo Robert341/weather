@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WeatherService } from './weather.service';
 import { Weather } from './weather';
 import { ForecastDay } from './forecast-day';
+import { WeatherDate } from './weather-date';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,47 @@ export class AppComponent implements OnInit {
   forecast: ForecastDay[] = [];
   searchCityName: string;
   isCelsius = true;
+  daysOfWeek = [
+    'Mon.',
+    'Tue.',
+    'Wed.',
+    'Thu.',
+    'Fri.',
+    'Sat.',
+    'Sun.'
+  ];
+  monthNames = [
+    'jan.',
+    'feb.',
+    'mar.',
+    'apr.',
+    'may',
+    'jun.',
+    'jul.',
+    'aug.',
+    'sep.',
+    'oct.',
+    'nov.',
+    'dec.'
+  ];
+  weatherCodes = {
+    clear: [800],
+    cloudy: [801],
+    cloudy_all: [802, 803, 804],
+    cloudy_rainy: [500, 501, 502, 503, 504],
+    lightening: [200, 201, 202, 210, 211, 212, 221, 230, 231, 232],
+    rainy: [300, 301, 302, 310, 311, 312, 313, 314, 321],
+    snow: [511, 600, 601, 602, 611, 612, 615, 616, 620, 621, 622]
+  };
+  weatherImageNames = [
+    'clear',
+    'cloudy',
+    'cloudy_all',
+    'cloudy_rainy',
+    'lightening',
+    'rainy',
+    'snow'
+  ];
   constructor(private weatherService: WeatherService) {}
 
   ngOnInit() {
@@ -22,26 +64,41 @@ export class AppComponent implements OnInit {
           lon = pos.coords.longitude;
 
         this.weatherService.getCurrentWeather(lat, lon).subscribe(weather => {
+          const date = new Date();
+
           this.currentWeather = new Weather(
             weather.name,
-            Math.round(weather.main.temp),
-            weather.weather[0].icon,
+            weather.main.temp,
+            this.getWeatherImageName(weather.weather[0].id),
             this.capitalize(weather.weather[0].description),
-            Math.round(weather.main.temp_max),
-            Math.round(weather.main.temp_min)
+            weather.main.temp_max,
+            weather.main.temp_min,
+            new WeatherDate(
+              date.getHours() + ':' + date.getMinutes(),
+              null,
+              null,
+              null
+            )
           );
 
           this.weatherService.getWeatherForecast(lat, lon).subscribe(forecast => {
               const list = forecast.list;
 
               for (let i = 0; i < list.length; i += 8) {
+                date.setDate(date.getDate() + 1);
+
                 this.forecast.push(new ForecastDay(
-                  list[i].dt_txt.split(' ')[0],
-                  Math.round(list[i].main.temp),
-                  list[i].weather[0].icon,
+                  list[i].main.temp,
+                  this.getWeatherImageName(list[i].weather[0].id),
                   this.capitalize(list[i].weather[0].description),
-                  Math.round(list[i].main.temp_max),
-                  Math.round(list[i].main.temp_min)
+                  list[i].main.temp_max,
+                  list[i].main.temp_min,
+                  new WeatherDate(
+                    null,
+                    (date.getDay() + 6) % 7,
+                    date.getDate(),
+                    date.getMonth()
+                  )
                 ));
               }
           });
@@ -51,16 +108,23 @@ export class AppComponent implements OnInit {
     });
   }
 
-
   searchByCityName() {
     this.weatherService.getCurrentWeatherByCityName(this.searchCityName).subscribe(weather => {
+      const date = new Date();
+
       this.currentWeather = new Weather(
         weather.name,
         weather.main.temp,
-        weather.weather[0].icon,
+        this.getWeatherImageName(weather.weather[0].id),
         this.capitalize(weather.weather[0].description),
         weather.main.temp_max,
-        weather.main.temp_min
+        weather.main.temp_min,
+        new WeatherDate(
+          date.getHours() + ':' + date.getMinutes(),
+          null,
+          null,
+          null
+        )
       );
 
       this.weatherService.getWeatherForecastByCityName(this.searchCityName).subscribe(forecast => {
@@ -69,19 +133,36 @@ export class AppComponent implements OnInit {
           this.forecast = [];
 
           for (let i = 0; i < list.length; i += 8) {
+            date.setDate(date.getDate() + 1);
+
             this.forecast.push(new ForecastDay(
-              list[i].dt_txt.split(' ')[0],
               list[i].main.temp,
-              list[i].weather[0].icon,
+              this.getWeatherImageName(list[i].weather[0].id),
               this.capitalize(list[i].weather[0].description),
               list[i].main.temp_max,
-              list[i].main.temp_min
+              list[i].main.temp_min,
+              new WeatherDate(
+                null,
+                (date.getDay() + 6) % 7,
+                date.getDate(),
+                date.getMonth()
+              )
             ));
           }
 
           this.searchCityName = '';
         });
     });
+  }
+
+  getWeatherImageName(weatherCode: number) {
+    for (const imageName in this.weatherCodes) {
+      if (this.weatherCodes[imageName].includes(weatherCode)) {
+        return imageName;
+      }
+    }
+
+    return this.weatherImageNames[Math.floor(Math.random() * this.weatherImageNames.length)];
   }
 
   capitalize(str: string) {
@@ -96,8 +177,8 @@ export class AppComponent implements OnInit {
     return str;
   }
 
-  round(val: number, digits: number) {
-    return Math.floor(val * Math.pow(10, digits)) / Math.pow(10, digits);
+  round(num: number) {
+    return Math.round(num);
   }
 
   cToF() {

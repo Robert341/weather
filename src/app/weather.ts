@@ -1,3 +1,5 @@
+import { WeatherDate } from './weather-date';
+
 export class Weather {
   constructor(
     public city: string,
@@ -5,6 +7,7 @@ export class Weather {
     public icon: string,
     public weatherKind: string,
     public tempMax: number,
-    public tempMin: number
+    public tempMin: number,
+    public date: WeatherDate
   ) {}
 }
