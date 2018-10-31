@@ -45,7 +45,7 @@
     <div class="row">
       <div class="col-sm-8 section_search_col">
         <form class="section_search_form" (ngSubmit)="searchByCityName()">
-          <input type="text" #search [(ngModel)]="searchCityName" [ngModelOptions]="{standalone: true}" name="" value="" placeholder="Search your location">
+          <input type="text" #search_city_input [(ngModel)]="searchCityName" [ngModelOptions]="{standalone: true}" name="" value="" placeholder="Search your location">
           <button type="submit" name="button"><i class="fas fa-search"></i></button>
         </form>
       </div>
@@ -121,7 +121,7 @@
             </div>
             <div class="sec1_box_img">
               <img src="../assets/image/weather/{{currentWeather.icon}}.png" alt="">
-              <span class="sec1_box_text_span">{{round(currentWeather.temp)}}</span>
+              <span class="sec1_box_text_span">{{round(currentWeather.temp)}}<span>o</span></span>
             </div>
             <div class="sec1_box_country">{{currentWeather.weatherKind}}</div>
           </div>

@@ -58,7 +58,7 @@ export class AppComponent implements OnInit {
     'rainy',
     'snow'
   ];
-  @ViewChild('search') public searchElement: ElementRef;
+  @ViewChild('search_city_input') public searchElement: ElementRef;
   constructor(
     private weatherService: WeatherService,
     private mapsAPILoader: MapsAPILoader,
@@ -173,6 +173,9 @@ export class AppComponent implements OnInit {
 
           this.searchCityName = '';
         });
+    },
+    () => {
+      window.alert('Error: No such city in database');
     });
   }
 
