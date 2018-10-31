@@ -175,7 +175,7 @@ export class AppComponent implements OnInit {
         });
     },
     () => {
-      window.alert('Error: No such city in database');
+      window.alert('Error: No such city in API Service');
     });
   }
 

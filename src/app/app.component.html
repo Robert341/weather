@@ -89,7 +89,7 @@
             </div>
             <div class="sec1_box_img">
               <img src="../assets/image/weather/{{currentWeather.icon}}.png" alt="">
-              <span class="sec1_box_text_span">{{round(currentWeather.temp)}}<span>o</span></span>
+              <span class="sec1_box_text_span">{{(round(currentWeather.temp) > 0 ? '+':'') + round(currentWeather.temp)}}<span>o</span></span>
             </div>
             <div class="sec1_box_country">{{currentWeather.weatherKind}}</div>
           </div>
@@ -105,7 +105,7 @@
             </div>
             <div class="sec1_box_img">
               <img src="../assets/image/weather/{{currentWeather.icon}}.png" alt="">
-              <span class="sec1_box_text_span">{{round(currentWeather.tempMin)}}<span>o</span></span>
+              <span class="sec1_box_text_span">{{(round(currentWeather.tempMin) > 0 ? '+':'') + round(currentWeather.tempMin)}}<span>o</span></span>
             </div>
             <div class="sec1_box_country">{{currentWeather.weatherKind}}</div>
           </div>
@@ -121,7 +121,7 @@
             </div>
             <div class="sec1_box_img">
               <img src="../assets/image/weather/{{currentWeather.icon}}.png" alt="">
-              <span class="sec1_box_text_span">{{round(currentWeather.temp)}}<span>o</span></span>
+              <span class="sec1_box_text_span">{{(round(currentWeather.temp) > 0 ? '+':'') + round(currentWeather.temp)}}<span>o</span></span>
             </div>
             <div class="sec1_box_country">{{currentWeather.weatherKind}}</div>
           </div>
@@ -137,7 +137,7 @@
             </div>
             <div class="sec1_box_img">
               <img src="../assets/image/weather/{{currentWeather.icon}}.png" alt="">
-              <span class="sec1_box_text_span">{{round(currentWeather.tempMax)}}<span>o</span></span>
+              <span class="sec1_box_text_span">{{(round(currentWeather.tempMax) > 0 ? '+':'') + round(currentWeather.tempMax)}}<span>o</span></span>
             </div>
             <div class="sec1_box_country">{{currentWeather.weatherKind}}</div>
           </div>
@@ -166,8 +166,8 @@
             <div class="sec1_box_img">
               <img src="../assets/image/weather/{{day.icon}}.png" alt="">
               <span class="sec1_box_text_bg">
-                  <span class="sec2_box_text1">{{round(day.tempMax)}}<span>o</span></span>
-                  <span class="sec2_box_text2"> {{round(day.tempMin)}}<span>o</span></span>
+                  <span class="sec2_box_text1">{{(round(day.tempMax) > 0 ? '+':'') + round(day.tempMax)}}<span>o</span></span><br />
+                  <span class="sec2_box_text2">{{(round(day.tempMin) > 0 ? '+':'') + round(day.tempMin)}}<span>o</span></span>
                 </span>
             </div>
             <div class="sec1_box_country">{{day.weatherKind}}</div>
