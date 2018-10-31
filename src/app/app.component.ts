@@ -4,7 +4,7 @@ import { Weather } from './weather';
 import { ForecastDay } from './forecast-day';
 import { WeatherDate } from './weather-date';
 import { MapsAPILoader } from '@agm/core';
-import {} from '@types/google-maps';
+import { google } from 'google-maps';
 
 @Component({
   selector: 'app-root',
