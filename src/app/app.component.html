@@ -45,7 +45,7 @@
     <div class="row">
       <div class="col-sm-8 section_search_col">
         <form class="section_search_form" (ngSubmit)="searchByCityName()">
-          <input type="text" [(ngModel)]="searchCityName" [ngModelOptions]="{standalone: true}" name="" value="" placeholder="Search your location">
+          <input type="text" #search [(ngModel)]="searchCityName" [ngModelOptions]="{standalone: true}" name="" value="" placeholder="Search your location">
           <button type="submit" name="button"><i class="fas fa-search"></i></button>
         </form>
       </div>

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { AgmCoreModule } from '@agm/core';
 
 import { AppComponent } from './app.component';
 import { LoadingComponent } from './loading/loading.component';
@@ -16,7 +17,11 @@ import { WeatherService } from './weather.service';
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDFWdCjrRzk8EES2CSAvNRudCiJbyqgSeA',
+      libraries: ['places']
+    })
   ],
   providers: [WeatherService],
   bootstrap: [AppComponent]

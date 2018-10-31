@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { WeatherService } from './weather.service';
 import { Weather } from './weather';
 import { ForecastDay } from './forecast-day';
 import { WeatherDate } from './weather-date';
+import { MapsAPILoader } from '@agm/core';
+import {} from '@types/google-maps';
 
 @Component({
   selector: 'app-root',
@@ -56,7 +58,12 @@ export class AppComponent implements OnInit {
     'rainy',
     'snow'
   ];
-  constructor(private weatherService: WeatherService) {}
+  @ViewChild('search') public searchElement: ElementRef;
+  constructor(
+    private weatherService: WeatherService,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone
+  ) {}
 
   ngOnInit() {
     this.weatherService.getCurrentPosition().subscribe(pos => {
@@ -104,6 +111,20 @@ export class AppComponent implements OnInit {
           });
 
           this.pageLoading = false;
+
+          this.mapsAPILoader.load().then(() => {
+            const autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, { types: ['address']});
+
+            autocomplete.addListener('place_changed', () => {
+              this.ngZone.run(() => {
+                const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+                if (place.geometry === undefined || place.geometry === null) {
+                  return;
+                }
+              });
+            });
+          });
         });
     });
   }
